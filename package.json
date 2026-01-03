@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "main": "electron/main.js",
+  "description": "A modern, industrial-grade OPC UA Client built with Electron and Vue 3.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
