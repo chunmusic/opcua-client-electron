@@ -3,11 +3,11 @@ import { computed } from 'vue'
 import { opcuaStore } from '../stores/opcua.js'
 
 const headers = [
-  { title: 'Node ID', key: 'nodeId', align: 'start' },
-  { title: 'Value', key: 'value', align: 'end' },
-  { title: 'Data Type', key: 'dataType', align: 'start' },
-  { title: 'Last Update', key: 'timestamp', align: 'end' },
-  { title: 'Actions', key: 'actions', align: 'end', sortable: false }
+  { title: 'Node ID', key: 'nodeId', align: 'center', headerProps: { class: 'font-weight-bold text-center justify-center' } },
+  { title: 'Value', key: 'value', align: 'center', headerProps: { class: 'font-weight-bold text-center justify-center' } },
+  { title: 'Data Type', key: 'dataType', align: 'center', headerProps: { class: 'font-weight-bold text-center justify-center' } },
+  { title: 'Last Update', key: 'timestamp', align: 'center', headerProps: { class: 'font-weight-bold text-center justify-center' } },
+  { title: 'Actions', key: 'actions', align: 'center', sortable: false, headerProps: { class: 'font-weight-bold text-center justify-center' } }
 ]
 
 function removeMonitor(nodeId) {
@@ -83,5 +83,10 @@ function getValueColor(val) {
   font-weight: 700 !important;
   text-transform: uppercase;
   color: rgba(0,0,0,0.6);
+  text-align: center !important;
+}
+
+:deep(.v-data-table-header__content) {
+  justify-content: center !important;
 }
 </style>

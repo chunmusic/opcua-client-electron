@@ -3,10 +3,10 @@ import { computed, onMounted } from 'vue'
 import { opcuaStore } from '../stores/opcua.js'
 
 const headers = [
-  { title: 'Time', key: 'time', align: 'start', width: '120px' },
-  { title: 'Severity', key: 'severity', align: 'center', width: '100px' },
-  { title: 'Source', key: 'sourceName', align: 'start' },
-  { title: 'Message', key: 'message', align: 'start' }
+  { title: 'Time', key: 'time', align: 'center', width: '120px', headerProps: { class: 'font-weight-bold text-center justify-center' } },
+  { title: 'Severity', key: 'severity', align: 'center', width: '100px', headerProps: { class: 'font-weight-bold text-center justify-center' } },
+  { title: 'Source', key: 'sourceName', align: 'center', headerProps: { class: 'font-weight-bold text-center justify-center' } },
+  { title: 'Message', key: 'message', align: 'center', headerProps: { class: 'font-weight-bold text-center justify-center' } }
 ]
 
 function getSeverityColor(severity) {
@@ -94,5 +94,10 @@ onMounted(() => {
   font-weight: 700 !important;
   text-transform: uppercase;
   color: rgba(0,0,0,0.6);
+  text-align: center !important;
+}
+
+:deep(.v-data-table-header__content) {
+  justify-content: center !important;
 }
 </style>

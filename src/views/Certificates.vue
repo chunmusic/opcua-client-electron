@@ -88,11 +88,11 @@ const currentItems = computed(() => {
 });
 
 const headers = [
-    { title: 'Subject', key: 'subject', align: 'start' },
-    { title: 'Thumbprint', key: 'thumbprint', align: 'start', sortable: false },
-    { title: 'Valid From', key: 'validFrom', align: 'end' },
-    { title: 'Expires', key: 'validTo', align: 'end' },
-    { title: 'Actions', key: 'actions', align: 'end', sortable: false },
+    { title: 'Subject', key: 'subject', align: 'center', headerProps: { class: 'font-weight-bold text-center justify-center' } },
+    { title: 'Thumbprint', key: 'thumbprint', align: 'center', sortable: false, headerProps: { class: 'font-weight-bold text-center justify-center' } },
+    { title: 'Valid From', key: 'validFrom', align: 'center', headerProps: { class: 'font-weight-bold text-center justify-center' } },
+    { title: 'Expires', key: 'validTo', align: 'center', headerProps: { class: 'font-weight-bold text-center justify-center' } },
+    { title: 'Actions', key: 'actions', align: 'center', sortable: false, headerProps: { class: 'font-weight-bold text-center justify-center' } },
 ];
 
 const fetchCertificates = async () => {
@@ -145,5 +145,10 @@ onMounted(() => {
   font-weight: 700 !important;
   text-transform: uppercase;
   color: rgba(0,0,0,0.6);
+  text-align: center !important;
+}
+
+:deep(.v-data-table-header__content) {
+  justify-content: center !important;
 }
 </style>
