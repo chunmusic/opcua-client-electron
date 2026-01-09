@@ -23,14 +23,21 @@
         hover
         class="flex-grow-1"
       >
+        <template v-slot:item.subject="{ item }">
+          <div class="d-flex align-center">
+             <v-icon v-if="item.error" color="error" size="small" class="mr-2">mdi-alert-circle</v-icon>
+             <span :class="{'text-error': item.error}">{{ item.subject }}</span>
+          </div>
+        </template>
         <template v-slot:item.validFrom="{ item }">
-          {{ new Date(item.validFrom).toLocaleDateString() }}
+          {{ item.validFrom ? new Date(item.validFrom).toLocaleDateString() : '-' }}
         </template>
         <template v-slot:item.validTo="{ item }">
-          {{ new Date(item.validTo).toLocaleDateString() }}
+          {{ item.validTo ? new Date(item.validTo).toLocaleDateString() : '-' }}
         </template>
         <template v-slot:item.thumbprint="{ item }">
-          <code class="bg-grey-lighten-4 pa-1 rounded text-caption">{{ item.thumbprint.substring(0, 20) }}...</code>
+          <code v-if="item.thumbprint" class="bg-grey-lighten-4 pa-1 rounded text-caption">{{ item.thumbprint.substring(0, 20) }}...</code>
+          <span v-else class="text-caption text-grey">N/A</span>
         </template>
         
         <template v-slot:item.actions="{ item }">
