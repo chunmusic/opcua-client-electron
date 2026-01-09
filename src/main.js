@@ -26,8 +26,8 @@ const vuetify = createVuetify({
             light: {
                 dark: false,
                 colors: {
-                    primary: '#5D87FF', // MaterialM Blue
-                    secondary: '#49BEFF', // MaterialM Cyan
+                    primary: '#5D87FF',
+                    secondary: '#49BEFF',
                     accent: '#8b5cf6',
                     error: '#FA896B',
                     info: '#539BFF',
@@ -37,6 +37,20 @@ const vuetify = createVuetify({
                     surface: '#ffffff',
                 }
             },
+            dark: {
+                dark: true,
+                colors: {
+                    primary: '#5D87FF',
+                    secondary: '#49BEFF',
+                    accent: '#8b5cf6',
+                    error: '#CF6679',
+                    info: '#539BFF',
+                    success: '#13DEB9',
+                    warning: '#FFAE1F',
+                    background: '#1a1a1a',
+                    surface: '#2d2d2d',
+                }
+            }
         },
     },
     icons: {

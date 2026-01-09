@@ -16,6 +16,7 @@
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "chalk": "4.1.2",
+    "electron-store": "^11.0.2",
     "node-opcua": "^2.159.0",
     "node-opcua-address-space": "^2.159.0",
     "node-opcua-address-space-for-conformance-testing": "^2.159.0",

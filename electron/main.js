@@ -1,5 +1,24 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { OpcUaClientService } from './opcuaclient.js';
+import Store from 'electron-store';
+
+const store = new Store({
+    defaults: {
+        theme: 'light',
+        endpointUrls: ['opc.tcp://opcuaserver.com:48010'],
+        autoConnect: false
+    }
+});
+
+// ... inside handlers ...
+ipcMain.handle('settings:get', async () => {
+    return store.store;
+});
+
+ipcMain.handle('settings:set', async (event, key, value) => {
+    store.set(key, value);
+    return true;
+});
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -33,7 +52,8 @@ function createWindow() {
 app.whenReady().then(() => {
     createWindow();
 
-    const opcService = new OpcUaClientService();
+    const userDataPath = app.getPath('userData');
+    const opcService = new OpcUaClientService(userDataPath);
 
     // IPC Handlers
     ipcMain.handle('opcua:connect', async (event, endpointUrl) => {
@@ -63,6 +83,16 @@ app.whenReady().then(() => {
         }
     });
 
+    ipcMain.handle('opcua:browse', async (event, nodeId) => {
+        try {
+            const results = await opcService.browseNode(nodeId);
+            return results;
+        } catch (error) {
+            console.error("Browse Error:", error);
+            return { error: error.message, references: [] };
+        }
+    });
+
     ipcMain.on('opcua:subscribe', async (event, nodeId) => {
         try {
             const win = BrowserWindow.getAllWindows()[0];
@@ -73,6 +103,36 @@ app.whenReady().then(() => {
             });
         } catch (error) {
             console.error("IPC Subscribe Error:", error);
+        }
+    });
+
+    // Certificate IPC Handlers
+    ipcMain.handle('opcua:get-certificates', async () => {
+        return await opcService.getCertificates();
+    });
+
+    ipcMain.handle('opcua:trust-certificate', async (event, { filename }) => {
+        return await opcService.trustCertificate(filename);
+    });
+
+    ipcMain.handle('opcua:reject-certificate', async (event, { filename }) => {
+        return await opcService.rejectCertificate(filename);
+    });
+
+    ipcMain.handle('opcua:delete-certificate', async (event, { filename, status }) => {
+        return await opcService.deleteCertificate(filename, status);
+    });
+
+    ipcMain.on('opcua:subscribe-events', async (event) => {
+        try {
+            const win = BrowserWindow.getAllWindows()[0];
+            await opcService.subscribeToEvents((eventData) => {
+                if (win) {
+                    win.webContents.send('opcua:event-received', eventData);
+                }
+            });
+        } catch (error) {
+            console.error("IPC Event Subscribe Error:", error);
         }
     });
 
